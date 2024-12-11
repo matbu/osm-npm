@@ -10,7 +10,7 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Load JSON data from file
-const jsonFilePath = "data.json";
+const jsonFilePath = "/opt/os-migrate/data.json";
 
 app.get("/", (req, res) => {
     fs.readFile(jsonFilePath, "utf8", (err, fileData) => {
@@ -179,7 +179,7 @@ app.post("/run-playbook", (req, res) => {
 
     // Run ansible-playbook command for each selected VM
     vmNames.forEach(vmName => {
-        const command = `ansible-playbook -i localhost run.yaml -e vm_name=${vmName}`;
+        const command = `ansible-playbook -i localhost migration.yaml -e vm_name=${vmName}`;
         console.log(`Executing: ${command}`);
         exec(command, (err, stdout, stderr) => {
             if (err) {
